@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\Route;
 // Authentication
 Route::post('login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
 Route::post('logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
-
+Route::get('login', [\App\Http\Controllers\Api\AuthController::class, 'login_page'])->name('login');
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('facilities', \App\Http\Controllers\Api\FacilitiesController::class);
+    Route::get('facilities', [\App\Http\Controllers\Api\FacilitiesController::class, 'index']);
 });
