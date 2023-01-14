@@ -9,6 +9,8 @@ use Tests\TestCase;
 class FacilitiesTest extends TestCase
 {
     use RefreshDatabase;
+
+    // setup
     /**
      * A basic feature test example.
      *
@@ -29,7 +31,7 @@ class FacilitiesTest extends TestCase
         $this->assertAuthenticated();
         // Create 10 facilities
         $facilities = \App\Models\Facility::factory()->count(10)->create();
-        // Get facilities
+        // Get facilitiesµ
         $response = $this->get('/api/facilities');
         // Assert status code
         $response->assertStatus(200);
@@ -38,5 +40,25 @@ class FacilitiesTest extends TestCase
         $response->assertJson([
             'data' => $facilities->toArray()
         ]);
+    }
+
+    public function test_unauthorized_users_cannot_add_facilities()
+    {
+        $this->withoutExceptionHandling();
+        // Login
+        $user = \App\Models\User::factory()->create([
+            'password' => bcrypt('password')
+        ]);
+        // Login user
+        $response = $this->post('/api/login', [
+            'email' => $user->email,
+            'password' => 'password'
+        ]);
+        $this->assertAuthenticated();
+        // Create facility
+        $facility = \App\Models\Facility::factory()->make();
+        // Add facility
+        $response = $this->post('/api/facilities', $facility->toArray());
+        $this->assertDatabaseHas('facilities', $facility->toArray());
     }
 }

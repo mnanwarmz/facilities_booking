@@ -20,6 +20,9 @@ Route::get('login', [\App\Http\Controllers\Api\AuthController::class, 'login_pag
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Facilities
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('facilities', [\App\Http\Controllers\Api\FacilitiesController::class, 'index']);
+    Route::post('facilities', [\App\Http\Controllers\Api\FacilitiesController::class, 'store']);
 });
