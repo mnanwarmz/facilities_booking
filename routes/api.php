@@ -24,5 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Facilities
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('facilities', [\App\Http\Controllers\Api\FacilitiesController::class, 'index']);
-    Route::post('facilities', [\App\Http\Controllers\Api\FacilitiesController::class, 'store']);
+    Route::post('facilities', [\App\Http\Controllers\Api\FacilitiesController::class, 'store'])->middleware(['middleware' => 'permission:add-facility']);
 });

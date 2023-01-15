@@ -18,7 +18,6 @@ class FacilitiesController extends Controller
 
     public function store(Request $request)
     {
-        $this->middleware('abilities:add-facility');
         $facility = Facility::create($request->all());
         return response()->json([
             'data' => $facility->toArray()
