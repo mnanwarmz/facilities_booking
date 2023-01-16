@@ -24,17 +24,27 @@ class ReservationTest extends TestCase
             'facility_id' => $facility->id,
             'user_id' => $user->id,
         ]);
-        $this->post('/api/reservations', $reservation->toArray());
+        $this->post('/api/reservations', $reservation->toArray())->assertStatus(201);
         $this->assertDatabaseHas('reservations', $reservation->toArray());
     }
-    public function test_user_cannot_make_reservations_on_timeslots_taken()
+    public function test_user_cannot_reserve_already_booked_time_slot()
     {
         $this->withoutExceptionHandling();
-        $this->actingAs($user = \App\Models\User::factory()->create());
+        $user = \App\Models\User::factory()->create();
+        $this->actingAs($user);
         $facility = \App\Models\Facility::factory()->create();
-        $reservation = \App\Models\Reservation::factory()->for($facility)->for($user)->make();
-
-        $this->post('/api/reservations', $reservation->toArray());
-        $this->assertDatabaseHas('reservations', $reservation->toArray());
+        $reservation = \App\Models\Reservation::factory()->create([
+            'facility_id' => $facility->id,
+            'user_id' => $user->id,
+        ]);
+        $reservation2 = \App\Models\Reservation::factory()->make([
+            'facility_id' => $facility->id,
+            'user_id' => $user->id,
+            'start_time' => $reservation->start_time,
+            'reservation_date' => $reservation->reservation_date,
+        ]);
+        $this->post('/api/reservations', $reservation2->toArray())
+            ->assertStatus(422);
+        $this->assertDatabaseMissing('reservations', $reservation2->toArray());
     }
 }
