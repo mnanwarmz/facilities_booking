@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('remarks')->nullable();
             $table->dateTime('start_time');
             $table->dateTime('end_time');
+            $table->dateTime('reservation_date');
             $table->timestamps();
         });
     }
