@@ -129,4 +129,42 @@ class FacilitiesTest extends TestCase
         ]);
         $this->assertDatabaseHas('facilities', $facilityEdited->toArray());
     }
+
+    public function test_unauthorized_users_cannot_delete_facilities()
+    {
+        $user = \App\Models\User::factory()->create([
+            'password' => bcrypt('password')
+        ]);
+        // Login user
+        $response = $this->post('/api/login', [
+            'email' => $user->email,
+            'password' => 'password'
+        ]);
+        // Create facility
+        $facility = \App\Models\Facility::factory()->create();
+        // Delete facility
+        $response = $this->delete('/api/facilities/' . $facility->id);
+        $response->assertStatus(403);
+        $this->assertDatabaseHas('facilities', $facility->toArray());
+    }
+
+    public function test_authorized_users_can_delete_facilities()
+    {
+        $user = \App\Models\User::factory()->create([
+            'password' => bcrypt('password')
+        ]);
+        // Login user
+        $response = $this->post('/api/login', [
+            'email' => $user->email,
+            'password' => 'password'
+        ]);
+        // Assign role to user
+        $user->assignRole('admin');
+        // Create facility
+        $facility = \App\Models\Facility::factory()->create();
+        // Delete facility
+        $response = $this->delete('/api/facilities/' . $facility->id);
+        $response->assertStatus(200);
+        $this->assertDatabaseMissing('facilities', $facility->toArray());
+    }
 }

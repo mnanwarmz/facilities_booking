@@ -26,4 +26,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('facilities', [\App\Http\Controllers\Api\FacilitiesController::class, 'index']);
     Route::post('facilities', [\App\Http\Controllers\Api\FacilitiesController::class, 'store'])->middleware(['middleware' => 'permission:add-facility']);
     Route::post('facilities/{id}', [\App\Http\Controllers\Api\FacilitiesController::class, 'update'])->middleware(['middleware' => 'permission:edit-facility']);
+    Route::delete('facilities/{id}', [\App\Http\Controllers\Api\FacilitiesController::class, 'destroy'])->middleware(['middleware' => 'permission:delete-facility']);
 });

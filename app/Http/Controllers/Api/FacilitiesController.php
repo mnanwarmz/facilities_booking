@@ -32,4 +32,13 @@ class FacilitiesController extends Controller
             'data' => $facility->toArray()
         ]);
     }
+
+    public function destroy($id)
+    {
+        $facility = Facility::findOrFail($id);
+        $facility->delete();
+        return response()->json([
+            'data' => $facility->toArray()
+        ]);
+    }
 }
