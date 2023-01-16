@@ -15,4 +15,30 @@ class FacilitiesController extends Controller
             'data' => $facilities->toArray()
         ]);
     }
+
+    public function store(Request $request)
+    {
+        $facility = Facility::create($request->all());
+        return response()->json([
+            'data' => $facility->toArray()
+        ]);
+    }
+
+    public function update($id, Request $request)
+    {
+        $facility = Facility::findOrFail($id);
+        $facility->update($request->all());
+        return response()->json([
+            'data' => $facility->toArray()
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $facility = Facility::findOrFail($id);
+        $facility->delete();
+        return response()->json([
+            'data' => $facility->toArray()
+        ]);
+    }
 }
