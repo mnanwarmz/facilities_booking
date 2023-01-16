@@ -23,4 +23,13 @@ class FacilitiesController extends Controller
             'data' => $facility->toArray()
         ]);
     }
+
+    public function update($id, Request $request)
+    {
+        $facility = Facility::findOrFail($id);
+        $facility->update($request->all());
+        return response()->json([
+            'data' => $facility->toArray()
+        ]);
+    }
 }
