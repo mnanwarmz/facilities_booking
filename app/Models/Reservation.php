@@ -9,4 +9,14 @@ class Reservation extends Model
 {
     protected $guarded = [];
     use HasFactory;
+
+    public function facility()
+    {
+        return $this->belongsTo(\App\Models\Facility::class, 'facility_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
+    }
 }

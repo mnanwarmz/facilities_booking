@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('purpose');
             $table->string('status')->default('pending');
             $table->string('remarks')->nullable();
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
-            $table->dateTime('reservation_date');
+            $table->timestamp('start_time');
+            $table->timestamp('end_time');
+            $table->date('reservation_date');
             $table->timestamps();
         });
     }

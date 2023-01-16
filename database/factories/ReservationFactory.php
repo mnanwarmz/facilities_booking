@@ -23,9 +23,9 @@ class ReservationFactory extends Factory
             'purpose' => $this->faker->sentence,
             'status' => $this->faker->randomElement(['pending', 'approved', 'rejected']),
             'remarks' => $this->faker->sentence,
-            'start_time' => $this->faker->dateTime,
-            'end_time' => $this->faker->dateTime,
-            'reservation_date' => $this->faker->dateTime,
+            'start_time' => $this->faker->time('H:i:s'),
+            'end_time' => $this->faker->time('H:i:s'),
+            'reservation_date' => $this->faker->date(),
         ];
     }
 }

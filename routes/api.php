@@ -28,3 +28,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('facilities/{id}', [\App\Http\Controllers\Api\FacilitiesController::class, 'update'])->middleware(['middleware' => 'permission:edit-facility']);
     Route::delete('facilities/{id}', [\App\Http\Controllers\Api\FacilitiesController::class, 'destroy'])->middleware(['middleware' => 'permission:delete-facility']);
 });
+
+// Reservations
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('reservations', [\App\Http\Controllers\Api\ReservationController::class, 'index']);
+    Route::post('reservations', [\App\Http\Controllers\Api\ReservationController::class, 'store']);
+    Route::post('reservations/{id}', [\App\Http\Controllers\Api\ReservationController::class, 'update']);
+    Route::delete('reservations/{id}', [\App\Http\Controllers\Api\ReservationController::class, 'destroy']);
+});
