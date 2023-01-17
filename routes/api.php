@@ -48,3 +48,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('payments/{id}', [\App\Http\Controllers\Api\PaymentController::class, 'update']);
     // Route::delete('payments/{id}', [\App\Http\Controllers\Api\PaymentController::class, 'destroy']);
 });
+
+// Admin
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('users', [\App\Http\Controllers\Api\UserController::class, 'index'])->middleware(['middleware' => 'permission:view-users']);
+    Route::post('users', [\App\Http\Controllers\Api\UserController::class, 'store'])->middleware(['middleware' => 'permission:add-user']);
+    Route::post('users/{id}', [\App\Http\Controllers\Api\UserController::class, 'update'])
+        ->middleware(['middleware' => 'permission:edit-user']);
+    Route::delete('users/{id}', [\App\Http\Controllers\Api\UserController::class, 'destroy'])
+        ->middleware(['middleware' => 'permission:delete-user']);
+});
