@@ -36,5 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('reservations/user/{username}', [\App\Http\Controllers\Api\ReservationController::class, 'showUserReservations']);
     Route::post('reservations', [\App\Http\Controllers\Api\ReservationController::class, 'store']);
     Route::post('reservations/{id}', [\App\Http\Controllers\Api\ReservationController::class, 'update']);
+    Route::post('reservations/cancel/{id}', [\App\Http\Controllers\Api\ReservationController::class, 'cancel'])
+        ->name('cancel-reservation');
     Route::delete('reservations/{id}', [\App\Http\Controllers\Api\ReservationController::class, 'destroy']);
 });

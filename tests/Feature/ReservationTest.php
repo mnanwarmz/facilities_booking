@@ -127,4 +127,21 @@ class ReservationTest extends TestCase
                 ],
             ]);
     }
+    public function test_users_can_cancel_their_reservation()
+    {
+        $this->withoutExceptionHandling();
+        $user = \App\Models\User::factory()->create(['password' => bcrypt('password')]);
+        $this->actingAs($user);
+        $facility = \App\Models\Facility::factory()->create();
+        $reservation = \App\Models\Reservation::factory()->create([
+            'facility_id' => $facility->id,
+            'user_id' => $user->id,
+        ]);
+        $this->post('/api/reservations/cancel/' . $reservation->id)
+            ->assertStatus(200);
+        $this->assertDatabaseHas('reservations', [
+            'id' => $reservation->id,
+            'status' => 'cancelled',
+        ]);
+    }
 }

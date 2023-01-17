@@ -45,4 +45,15 @@ class ReservationController extends Controller
         $reservations = $reservationService->getReservationsBelongingToUser(auth()->user()->id);
         return response()->json(['data' => $reservations], 200);
     }
+
+    public function cancel($id)
+    {
+        $reservation = \App\Models\Reservation::findOrFail($id);
+        if ($reservation) {
+            $reservation->status = 'cancelled';
+            $reservation->save();
+            return response()->json(['message' => 'Reservation cancelled'], 200);
+        }
+        return response()->json(['message' => 'Reservation not found'], 404);
+    }
 }
