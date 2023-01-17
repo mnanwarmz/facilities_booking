@@ -31,7 +31,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // Reservations
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('reservations', [\App\Http\Controllers\Api\ReservationController::class, 'index']);
+    Route::get('reservations', [\App\Http\Controllers\Api\ReservationController::class, 'index'])->middleware(['middleware' => 'permission:view-reservations']);
+    Route::get('reservations/{id}', [\App\Http\Controllers\Api\ReservationController::class, 'show']);
+    Route::get('reservations/user/{username}', [\App\Http\Controllers\Api\ReservationController::class, 'showUserReservations']);
     Route::post('reservations', [\App\Http\Controllers\Api\ReservationController::class, 'store']);
     Route::post('reservations/{id}', [\App\Http\Controllers\Api\ReservationController::class, 'update']);
     Route::delete('reservations/{id}', [\App\Http\Controllers\Api\ReservationController::class, 'destroy']);
