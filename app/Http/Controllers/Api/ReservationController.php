@@ -50,7 +50,7 @@ class ReservationController extends Controller
     {
         $reservation = \App\Models\Reservation::findOrFail($id);
         if ($reservation) {
-            $reservation->status = 'cancelled';
+            $reservation->status = \App\Enums\ReservationStatusEnum::CANCELLED;
             $reservation->save();
             return response()->json(['message' => 'Reservation cancelled'], 200);
         }

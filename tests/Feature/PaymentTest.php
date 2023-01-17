@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\ReservationStatusEnum;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -40,6 +41,10 @@ class PaymentTest extends TestCase
             'amount' => 100,
             'reservation_id' => $reservation->id,
             'user_id' => auth()->id(),
+        ]);
+        $this->assertDatabaseHas('reservations', [
+            'id' => $reservation->id,
+            'status' => ReservationStatusEnum::PAID,
         ]);
     }
 }
