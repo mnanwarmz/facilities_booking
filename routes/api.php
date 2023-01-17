@@ -40,3 +40,11 @@ Route::middleware('auth:sanctum')->group(function () {
         ->name('cancel-reservation');
     Route::delete('reservations/{id}', [\App\Http\Controllers\Api\ReservationController::class, 'destroy']);
 });
+
+// Payments
+Route::middleware('auth:sanctum')->group(function () {
+    // Route::get('payments', [\App\Http\Controllers\Api\PaymentController::class, 'index']);
+    Route::post('payments', [\App\Http\Controllers\Api\PaymentController::class, 'store']);
+    Route::post('payments/{id}', [\App\Http\Controllers\Api\PaymentController::class, 'update']);
+    // Route::delete('payments/{id}', [\App\Http\Controllers\Api\PaymentController::class, 'destroy']);
+});
