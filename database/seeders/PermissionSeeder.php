@@ -32,6 +32,8 @@ class PermissionSeeder extends Seeder
             'edit-permission',
             'delete-permission',
             'view-permission',
+            'view-reservations',
+            'update-reservations',
         ];
         foreach ($permissions as $permission) {
             \Spatie\Permission\Models\Permission::create(['name' => $permission]);

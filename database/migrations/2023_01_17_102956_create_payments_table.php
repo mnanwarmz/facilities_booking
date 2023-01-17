@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('facilities', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description');
-            $table->string('image')->nullable();
-            $table->integer('capacity');
-            $table->float('rate_per_hour');
+            $table->string('method');
+            $table->string('status')->default('pending');
+            $table->float('amount')->default(0);
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('reservation_id')->constrained();
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('facilities');
+        Schema::dropIfExists('payments');
     }
 };

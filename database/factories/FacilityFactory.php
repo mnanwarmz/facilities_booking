@@ -22,6 +22,7 @@ class FacilityFactory extends Factory
             'description' => $this->faker->text,
             'image' => $this->faker->imageUrl,
             'capacity' => $this->faker->numberBetween(1, 100),
+            'rate_per_hour' => $this->faker->randomFloat(2, 1, 100),
         ];
     }
 }

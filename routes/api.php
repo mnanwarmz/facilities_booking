@@ -28,3 +28,23 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('facilities/{id}', [\App\Http\Controllers\Api\FacilitiesController::class, 'update'])->middleware(['middleware' => 'permission:edit-facility']);
     Route::delete('facilities/{id}', [\App\Http\Controllers\Api\FacilitiesController::class, 'destroy'])->middleware(['middleware' => 'permission:delete-facility']);
 });
+
+// Reservations
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('reservations', [\App\Http\Controllers\Api\ReservationController::class, 'index'])->middleware(['middleware' => 'permission:view-reservations']);
+    Route::get('reservations/{id}', [\App\Http\Controllers\Api\ReservationController::class, 'show']);
+    Route::get('reservations/user/{username}', [\App\Http\Controllers\Api\ReservationController::class, 'showUserReservations']);
+    Route::post('reservations', [\App\Http\Controllers\Api\ReservationController::class, 'store']);
+    Route::post('reservations/{id}', [\App\Http\Controllers\Api\ReservationController::class, 'update']);
+    Route::post('reservations/cancel/{id}', [\App\Http\Controllers\Api\ReservationController::class, 'cancel'])
+        ->name('cancel-reservation');
+    Route::delete('reservations/{id}', [\App\Http\Controllers\Api\ReservationController::class, 'destroy']);
+});
+
+// Payments
+Route::middleware('auth:sanctum')->group(function () {
+    // Route::get('payments', [\App\Http\Controllers\Api\PaymentController::class, 'index']);
+    Route::post('payments', [\App\Http\Controllers\Api\PaymentController::class, 'store']);
+    Route::post('payments/{id}', [\App\Http\Controllers\Api\PaymentController::class, 'update']);
+    // Route::delete('payments/{id}', [\App\Http\Controllers\Api\PaymentController::class, 'destroy']);
+});
