@@ -23,6 +23,7 @@ return new class extends Migration
             $table->time('start_time');
             $table->time('end_time');
             $table->date('reservation_date');
+            $table->float('total')->default(0);
             $table->timestamps();
         });
     }

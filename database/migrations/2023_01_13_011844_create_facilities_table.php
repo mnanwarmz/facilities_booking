@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('image')->nullable();
             $table->integer('capacity');
+            $table->float('rate_per_hour');
             $table->timestamps();
         });
     }
