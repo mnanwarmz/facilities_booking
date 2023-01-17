@@ -26,4 +26,20 @@ class UserController extends Controller
             'message' => 'User created successfully'
         ], 201);
     }
+
+    public function assignRoles(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'role_ids' => 'required|array',
+            'role_ids.*' => 'exists:roles,id',
+        ]);
+
+        $user = \App\Models\User::find($request->user_id);
+        $user->roles()->attach($request->role_ids);
+
+        return response()->json([
+            'message' => 'Roles assigned successfully'
+        ], 200);
+    }
 }

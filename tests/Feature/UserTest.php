@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Database\Seeders\InitialSetupSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -48,5 +49,22 @@ class UserTest extends TestCase
             'username' => $userFake->username,
         ]);
         $response->assertStatus(201);
+    }
+
+    public function test_admin_can_assign_role_to_users()
+    {
+        $this->withoutExceptionHandling();
+        $user = \App\Models\User::factory()->create();
+        $user->assignRole('admin');
+        $this->post('/api/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+        $userFake = \App\Models\User::factory()->create();
+        $response = $this->post('/api/users/' . $userFake->id . '/roles', [
+            'user_id' => $userFake->id,
+            'role_ids' => [1],
+        ]);
+        $response->assertStatus(200);
     }
 }
