@@ -31,4 +31,17 @@ class FacilityTypeTest extends TestCase
         $this->post('/api/facility-types', $factory->toArray());
         $this->assertDatabaseHas('facility_types', $factory->toArray());
     }
+
+    public function test_can_get_all_facility_types()
+    {
+        $this->withoutExceptionHandling();
+        $this->actingAs($user = User::factory()->create());
+        $user->assignRole('admin');
+        $factory = \App\Models\FacilityType::factory()->count(10)->create();
+        $response = $this->get('/api/facility-types');
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => $factory->toArray()
+        ]);
+    }
 }

@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class FacilityTypeController extends Controller
 {
+    public function index()
+    {
+        return response()->json(['data' => FacilityType::latest()->get()], 200);
+    }
     public function store(FacilityTypeRequest $request)
     {
         $facilityType = FacilityType::create($request->all());
