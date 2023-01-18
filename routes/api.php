@@ -56,6 +56,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('users/{id}', [\App\Http\Controllers\Api\UserController::class, 'update'])
         ->middleware(['middleware' => 'permission:edit-users']);
     Route::post('users/{id}/roles', [\App\Http\Controllers\Api\UserController::class, 'assignRoles']);
+    Route::post('users/remove/{userId}/roles', [\App\Http\Controllers\Api\UserController::class, 'removeRoles']);
     Route::delete('users/{id}', [\App\Http\Controllers\Api\UserController::class, 'destroy'])
         ->middleware(['middleware' => 'permission:delete-users']);
     // Roles

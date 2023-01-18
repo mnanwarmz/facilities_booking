@@ -42,4 +42,19 @@ class UserController extends Controller
             'message' => 'Roles assigned successfully'
         ], 200);
     }
+
+    public function removeRoles($userId, Request $request)
+    {
+        $request->validate([
+            'role_ids' => 'required|array',
+            'role_ids.*' => 'exists:roles,id',
+        ]);
+
+        $user = \App\Models\User::find($userId);
+        $user->roles()->detach($request->role_ids);
+
+        return response()->json([
+            'message' => 'Roles removed successfully'
+        ], 200);
+    }
 }
