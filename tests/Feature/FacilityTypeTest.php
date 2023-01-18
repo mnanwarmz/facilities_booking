@@ -44,4 +44,57 @@ class FacilityTypeTest extends TestCase
             'data' => $factory->toArray()
         ]);
     }
+
+    public function test_can_view_specific_facility_type()
+    {
+        $this->withoutExceptionHandling();
+        $this->actingAs($user = User::factory()->create());
+        $user->assignRole('admin');
+        $factory = \App\Models\FacilityType::factory()->create();
+        $response = $this->get('/api/facility-types/' . $factory->id);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => $factory->toArray()
+        ]);
+    }
+
+    public function test_admin_can_deactivate_facility_type()
+    {
+        $this->withoutExceptionHandling();
+        $this->actingAs($user = User::factory()->create());
+        $user->assignRole('admin');
+        $factory = \App\Models\FacilityType::factory()->create();
+        $response = $this->post('/api/facility-types/deactivate/' . $factory->id);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => $factory->toArray()
+        ]);
+        $this->assertDatabaseHas('facility_types', [
+            'id' => $factory->id,
+            'is_active' => false
+        ]);
+    }
+
+    public function test_admin_can_update_facility_type()
+    {
+        $this->withoutExceptionHandling();
+        $this->actingAs($user = User::factory()->create());
+        $user->assignRole('admin');
+        $factory = \App\Models\FacilityType::factory()->create();
+        $response = $this->post('/api/facility-types/' . $factory->id, [
+            'name' => 'Updated Facility Type',
+            'description' => 'Updated Facility Type'
+        ]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                'name' => 'Updated Facility Type',
+                'description' => 'Updated Facility Type',
+            ]
+        ]);
+        $this->assertDatabaseHas('facility_types', [
+            'id' => $factory->id,
+            'name' => 'Updated Facility Type'
+        ]);
+    }
 }

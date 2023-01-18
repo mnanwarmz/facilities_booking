@@ -42,6 +42,7 @@ class PermissionSeeder extends Seeder
             'add-facility-type',
             'edit-facility-type',
             'delete-facility-type',
+            'deactivate-facility-type'
         ];
         foreach ($permissions as $permission) {
             \Spatie\Permission\Models\Permission::create(['name' => $permission]);

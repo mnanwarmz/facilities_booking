@@ -18,4 +18,24 @@ class FacilityTypeController extends Controller
         $facilityType = FacilityType::create($request->all());
         return response()->json($facilityType, 201);
     }
+
+    public function show($id)
+    {
+        $facilityType = FacilityType::findOrFail($id);
+        return response()->json(['data' => $facilityType], 200);
+    }
+    public function deactivate($id)
+    {
+        $facilityType = FacilityType::findOrFail($id);
+        $facilityType->is_active = false;
+        $facilityType->save();
+        return response()->json(['data' => $facilityType], 200);
+    }
+
+    public function update($id, FacilityTypeRequest $request)
+    {
+        $facilityType = FacilityType::findOrFail($id);
+        $facilityType->update($request->all());
+        return response()->json(['data' => $facilityType], 200);
+    }
 }

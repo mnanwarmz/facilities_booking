@@ -52,9 +52,10 @@ Route::middleware('auth:sanctum')->group(function () {
 // Facility Types
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('facility-types', [\App\Http\Controllers\Api\FacilityTypeController::class, 'index']);
+    Route::get('facility-types/{id}', [\App\Http\Controllers\Api\FacilityTypeController::class, 'show']);
     Route::post('facility-types', [\App\Http\Controllers\Api\FacilityTypeController::class, 'store'])->middleware(['middleware' => 'permission:add-facility-type']);
     Route::post('facility-types/{id}', [\App\Http\Controllers\Api\FacilityTypeController::class, 'update'])->middleware(['middleware' => 'permission:edit-facility-type']);
-    Route::delete('facility-types/{id}', [\App\Http\Controllers\Api\FacilityTypeController::class, 'destroy'])->middleware(['middleware' => 'permission:delete-facility-type']);
+    Route::post('facility-types/deactivate/{id}', [\App\Http\Controllers\Api\FacilityTypeController::class, 'deactivate'])->middleware(['middleware' => 'permission:deactivate-facility-type']);
 });
 
 // Admin
