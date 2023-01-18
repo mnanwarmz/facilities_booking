@@ -38,7 +38,10 @@ class PermissionSeeder extends Seeder
             'view-users',
             'edit-users',
             'delete-users',
-            'add-users'
+            'add-users',
+            'add-facility-type',
+            'edit-facility-type',
+            'delete-facility-type',
         ];
         foreach ($permissions as $permission) {
             \Spatie\Permission\Models\Permission::create(['name' => $permission]);

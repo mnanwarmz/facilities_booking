@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('facilities', function (Blueprint $table) {
+        Schema::create('facility_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
             $table->string('image')->nullable();
-            $table->integer('capacity');
-            $table->float('rate_per_hour');
-            $table->foreignId('facility_type_id')->constrained();
+            $table->string('description')->nullable();
+            $table->string('color')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('facilities');
+        Schema::dropIfExists('facility_types');
     }
 };

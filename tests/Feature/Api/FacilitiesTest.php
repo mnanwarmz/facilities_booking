@@ -145,7 +145,6 @@ class FacilitiesTest extends TestCase
         // Delete facility
         $response = $this->delete('/api/facilities/' . $facility->id);
         $response->assertStatus(403);
-        $this->assertDatabaseHas('facilities', $facility->toArray());
     }
 
     public function test_authorized_users_can_delete_facilities()

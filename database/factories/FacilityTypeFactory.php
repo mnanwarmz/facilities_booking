@@ -2,14 +2,15 @@
 
 namespace Database\Factories;
 
+use App\Models\FacilityType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Facility>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FacilityType>
  */
-class FacilityFactory extends Factory
+class FacilityTypeFactory extends Factory
 {
-    protected $model = \App\Models\Facility::class;
+    protected $model = FacilityType::class;
     /**
      * Define the model's default state.
      *
@@ -20,10 +21,8 @@ class FacilityFactory extends Factory
         return [
             'name' => $this->faker->name,
             'description' => $this->faker->text,
+            'color' => $this->faker->hexColor,
             'image' => $this->faker->imageUrl,
-            'capacity' => $this->faker->numberBetween(1, 100),
-            'rate_per_hour' => $this->faker->randomFloat(2, 1, 100),
-            'facility_type_id' => \App\Models\FacilityType::factory(),
         ];
     }
 }
