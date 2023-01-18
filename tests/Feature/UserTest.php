@@ -60,10 +60,12 @@ class UserTest extends TestCase
             'email' => $user->email,
             'password' => 'password',
         ]);
+        // Get first spatie role
+        $role = Role::first();
         $userFake = \App\Models\User::factory()->create();
         $response = $this->post('/api/users/' . $userFake->id . '/roles', [
             'user_id' => $userFake->id,
-            'role_ids' => [1],
+            'role_ids' => [$role->id],
         ]);
         $response->assertStatus(200);
     }
